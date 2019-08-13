@@ -1,0 +1,19 @@
+.insurances {
+	float: right;
+	width: 235px;
+	background-color: #FFFFFF;
+    border: 1px solid #D0CBC1;
+    margin: 0 0 18px;
+    padding: 12px 15px;
+}
+.insurances .insurance {
+	margin: 5px 0;
+}
+.insurances .form label {
+    font-weight: bold;
+    float: left;
+}
+.insurances .form input {
+	margin: 0 0 0 10px;
+	float: right;
+}

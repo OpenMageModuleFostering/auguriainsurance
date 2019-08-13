@@ -1,0 +1,65 @@
+<?php
+/**
+ * @category   Auguria
+ * @package    Auguria_Insurance
+ * @author     Auguria
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3 (GPLv3)
+ */
+
+/* @var $this Auguria_Insurance_Block_Checkout_Insurance */
+?>
+<?php if($this->isNotEmptyCart()):?>
+
+<?php
+/* @var $insurances Mage_Catalog_Model_Resource_Product_Collection */
+$insurances = $this->getInsurances();
+?>
+
+<?php
+    if($insurances->getSize()):
+?>
+        <div class="insurances">
+<?php
+        foreach($insurances as $_insurance):
+            /* @var $_insurance Mage_Catalog_Model_Product */
+            $insuranceIsInCart = $this->isInsuranceInCart($_insurance);
+?>
+            <div class="insurance">
+                <form id="form-insurance-<?php echo $_insurance->getId()?>" class="form" action="<?php echo Mage::getUrl('auguria_insurance/index/updateInsurance')?>" method="post">
+                    <label for="insurance-<?php echo $_insurance->getId()?>">
+                        <?php echo $_insurance->getName()?>
+                        <?php echo $this->getPriceHtml($_insurance)?>
+                    </label>
+                    <input type="checkbox" id="insurance-<?php echo $_insurance->getId()?>" name="insurance" value="1" <?php echo $insuranceIsInCart ? 'checked="checked"' : '' ?>>
+                    <input type="hidden" name="is_in_cart" value="<?php echo $insuranceIsInCart ? '1' : '0' ?>">
+                    <input type="hidden" name="insurance_id" value="<?php echo $_insurance->getId() ?>">
+                </form>
+
+                <div class="clearer"></div>
+
+                <div class="description">
+                    <?php echo $_insurance->getShortDescription()?>
+                </div>
+            </div>
+<?php
+        endforeach;
+?>
+        </div>
+
+<script type="text/javascript">
+//<![CDATA[
+    $$('.insurance .form input[type="checkbox"]').each(function(elem){
+        $(elem).observe('click', function(event){
+    		$('form-' + elem.id).submit();
+        });
+    });
+//]]>
+</script>
+
+<?php
+    endif;
+?>
+
+<?php
+endif;
+?>

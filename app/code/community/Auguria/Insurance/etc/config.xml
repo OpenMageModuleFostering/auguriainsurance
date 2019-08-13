@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ * @category   Auguria
+ * @package    Auguria_Insurance
+ * @author     Auguria
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3 (GPLv3)
+ */
+ -->
+<config>
+
+	<modules>
+		<Auguria_Insurance>
+			<version>0.0.1</version>
+		</Auguria_Insurance>
+	</modules>
+	
+	<global>
+        <resources>
+            <auguria_insurance_setup>
+                <setup>
+                    <module>Auguria_Insurance</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+            </auguria_insurance_setup>
+        </resources>
+        <blocks>
+            <auguria_insurance>
+                <class>Auguria_Insurance_Block</class>
+            </auguria_insurance>
+        </blocks>
+		<helpers>
+			<auguria_insurance>
+				<class>Auguria_Insurance_Helper</class>
+			</auguria_insurance>
+		</helpers>
+		<models>
+            <auguria_insurance>
+                <class>Auguria_Insurance_Model</class>
+            </auguria_insurance>
+        </models>
+        <events>
+            <sales_quote_collect_totals_after>
+                <observers>
+                    <auguria_insurance_quote_summary_qty>
+                        <class>auguria_insurance/observer</class>
+                        <method>initQuoteQty</method>
+                    </auguria_insurance_quote_summary_qty>
+                </observers>
+            </sales_quote_collect_totals_after>
+            <sales_quote_item_qty_set_after>
+                <observers>
+                    <auguria_insurance_quote_item_qty>
+                        <class>auguria_insurance/observer</class>
+                        <method>initItemQty</method>
+                    </auguria_insurance_quote_item_qty>
+                </observers>
+            </sales_quote_item_qty_set_after>
+            <controller_action_predispatch_checkout_cart_index>
+                <observers>
+                    <auguria_insurance_init_quote_insurances>
+                        <class>auguria_insurance/observer</class>
+                        <method>initQuoteInsurances</method>
+                    </auguria_insurance_init_quote_insurances>
+                </observers>
+            </controller_action_predispatch_checkout_cart_index>
+        </events>
+        
+        <catalog>
+            <product>
+                <type>
+                    <auguria_insurance translate="label" module="auguria_insurance">
+                        <label>Insurance product</label>
+                        <model>auguria_insurance/catalog_product_type_insurance</model>
+                        <composite>0</composite>
+                        <index_priority>0</index_priority>
+                    </auguria_insurance>
+                </type>
+            </product>
+        </catalog>
+        <sales>
+            <quote>
+                <totals>
+                    <auguria_insurance>
+                        <class>auguria_insurance/sales_quote_address_total_insurance</class>
+                        <after>-</after>
+                        <renderer>auguria_insurance/checkout_cart_total_insurance</renderer>
+                        <admin_renderer>auguria_insurance/adminhtml_checkout_cart_total_insurance</admin_renderer>
+                    </auguria_insurance>
+                </totals>
+            </quote>
+        </sales>
+        <pdf>
+            <totals>
+                <auguria_insurance translate="title">
+                    <title>Insurances</title>
+                    <model>auguria_insurance/sales_order_pdf_total_insurance</model>
+                    <font_size>7</font_size>
+                    <display_zero>1</display_zero>
+                    <sort_order>800</sort_order>
+                </auguria_insurance>
+            </totals>
+            <invoice>
+                <auguria_insurance>auguria_insurance/sales_order_pdf_items_default</auguria_insurance>
+            </invoice>
+            <shipment>
+                <auguria_insurance>auguria_insurance/sales_order_pdf_items_default</auguria_insurance>
+            </shipment>
+            <creditmemo>
+                <auguria_insurance>auguria_insurance/sales_order_pdf_items_default</auguria_insurance>
+            </creditmemo>
+        </pdf>
+	</global>
+	
+    <frontend>
+        <routers>
+            <auguria_insurance>
+                <use>standard</use>
+                <args>
+                    <module>Auguria_Insurance</module>
+                    <frontName>insurance</frontName>
+                </args>
+            </auguria_insurance>
+        </routers>
+        <layout>
+            <updates>
+                <auguria_insurance>
+                    <file>auguria/insurance.xml</file>
+                </auguria_insurance>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Auguria_Insurance>
+                    <files>
+                        <default>Auguria_Insurance.csv</default>
+                    </files>
+                </Auguria_Insurance>
+            </modules>
+        </translate>
+	</frontend>
+	
+	<adminhtml>
+	   <layout>
+            <updates>
+                <auguria_insurance>
+                    <file>auguria/insurance.xml</file>
+                </auguria_insurance>
+            </updates>
+        </layout>
+		<translate>
+            <modules>
+                <Auguria_Insurance>
+                    <files>
+                        <default>Auguria_Insurance.csv</default>
+                    </files>
+                </Auguria_Insurance>
+            </modules>
+        </translate>
+        <sales>
+            <order>
+                <create>
+                    <available_product_types>
+                        <auguria_insurance/>
+                    </available_product_types>
+                </create>
+            </order>
+        </sales>
+    </adminhtml>
+	
+	<default>
+	   <auguria_insurance>
+	       <general>
+	           <active>1</active>
+	       </general>
+	       <cart>
+	           <display_price>2</display_price>
+	       </cart>
+	       <sales>
+               <display_price>2</display_price>
+           </sales>
+	   </auguria_insurance>
+	</default>
+	
+</config>

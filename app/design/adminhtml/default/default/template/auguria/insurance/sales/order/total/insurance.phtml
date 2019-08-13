@@ -1,0 +1,22 @@
+<?php
+/**
+ * @category   Auguria
+ * @package    Auguria_Insurance
+ * @author     Auguria
+ * @license    http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3 (GPLv3)
+ */
+
+/* @var $this Auguria_Insurance_Block_Sales_Order_Total_Insurance */
+?>
+<?php
+    foreach($this->getInsurances() as $_insurance):
+?>
+    <tr>
+        <td colspan="<?php echo $this->getColspan(); ?>" <?php echo $this->getAdditionnalAttributes()?> style="<?php echo $this->getTotal()->getStyle() . $this->getAdditionnalStyles() ?>" class="a-right">
+            <?php echo $_insurance->getName() . ' ' . $this->__('(included in total amount)') ?>
+        </td>
+        <td <?php echo $this->getAdditionnalAttributes()?> style="<?php echo $this->getTotal()->getStyle() . $this->getAdditionnalStyles()?>" class="a-right">
+            <?php echo $this->getFormatedPrice($_insurance)?>
+        </td>
+    </tr>
+<?php endforeach;?>
